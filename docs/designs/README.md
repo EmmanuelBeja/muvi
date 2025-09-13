@@ -7,5 +7,5 @@ These are exported design pages from Figma.
 ## Screens
 
 ![Movie List Page](./MOVIE%20LIST.png)
-![Movie Details](./MOVIE%20DETAILS.png)
-![loin](./LOGIN.png)
+![Movie Details Page](./MOVIE%20DETAILS.png)
+![login Page](./LOGIN.png)

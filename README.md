@@ -1,69 +1,38 @@
-# React + TypeScript + Vite
+# 🎬 Movies App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript application built with Vite, TailwindCSS, shadcn/ui, Zustand, TanStack React Router, and React Query. This project demonstrates a modern frontend stack with clean state management, routing, and API integration (TMDB).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎨 Design Documentation
 
-## Expanding the ESLint configuration
+The UI/UX designs were created in **Figma**.  
+👉 [View full Figma file](https://www.figma.com/proto/uOhjpyhNqxcMKZHh0sww4T/Movies?node-id=13-21&t=fre0YNCmw8fqB5Jt-1&scaling=contain&content-scaling=fixed&page-id=0%3A1)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+For exported design screenshots, see [`/docs/design/`](./docs/design/README.md).
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🛠️ Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+- **React + TypeScript** (via Vite)
+- **TailwindCSS** for styling
+- **shadcn/ui** for accessible, reusable UI components
+- **TanStack React Router** for routing
+- **TanStack React Query** for data fetching/caching
+- **Zustand** for state management
+- **Cypress** for end-to-end testing
+
+---
+
+## 📦 Node.js Version
+
+This project uses a specific Node.js version managed via [nvm](https://github.com/nvm-sh/nvm).  
+The version is pinned in the [`.nvmrc`](./.nvmrc) file.
+
+```bash
+# Use the correct version
+nvm use
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+---

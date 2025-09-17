@@ -79,7 +79,7 @@ const MovieSearchNavigationMenuItem = () => {
               {moviesData.map((movie: Movie) => (
                 <li
                   key={movie.id}
-                  className="bg-white shadow p-3 rounded-lg"
+                  className="bg-white shadow p-3 rounded-lg h-fit"
                   data-testid="search-result"
                 >
                   <MovieCard

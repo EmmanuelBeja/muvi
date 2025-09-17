@@ -30,6 +30,7 @@ const MovieCard = ({
       to={`/movies/${movie.id}`}
       onMouseEnter={() => prefetchMovie(movie.id)}
       onClick={() => (onClick ? onClick() : '')}
+      className="h-fit"
     >
       <LazyLoadImage
         effect="blur"

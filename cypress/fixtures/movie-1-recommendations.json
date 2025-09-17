@@ -1,0 +1,159 @@
+{
+  "page": 1,
+  "total_pages": 5,
+  "total_results": 100,
+  "results": [
+    {
+      "id": 2,
+      "title": "Recommended Movie",
+      "poster_path": "/test-poster-2.jpg",
+      "overview": "Test overview 2",
+      "release_date": "2024-01-02",
+      "vote_average": 7.8
+    },
+    {
+      "id": 3,
+      "title": "Movie 3",
+      "poster_path": "/test-poster-3.jpg",
+      "overview": "Test overview 3",
+      "release_date": "2024-01-03",
+      "vote_average": 7.2
+    },
+    {
+      "id": 4,
+      "title": "Movie 4",
+      "poster_path": "/test-poster-4.jpg",
+      "overview": "Test overview 4",
+      "release_date": "2024-01-04",
+      "vote_average": 6.9
+    },
+    {
+      "id": 5,
+      "title": "Movie 5",
+      "poster_path": "/test-poster-5.jpg",
+      "overview": "Test overview 5",
+      "release_date": "2024-01-05",
+      "vote_average": 8.1
+    },
+    {
+      "id": 6,
+      "title": "Movie 6",
+      "poster_path": "/test-poster-6.jpg",
+      "overview": "Test overview 6",
+      "release_date": "2024-01-06",
+      "vote_average": 7.5
+    },
+    {
+      "id": 7,
+      "title": "Movie 7",
+      "poster_path": "/test-poster-7.jpg",
+      "overview": "Test overview 7",
+      "release_date": "2024-01-07",
+      "vote_average": 6.8
+    },
+    {
+      "id": 8,
+      "title": "Movie 8",
+      "poster_path": "/test-poster-8.jpg",
+      "overview": "Test overview 8",
+      "release_date": "2024-01-08",
+      "vote_average": 7.9
+    },
+    {
+      "id": 9,
+      "title": "Movie 9",
+      "poster_path": "/test-poster-9.jpg",
+      "overview": "Test overview 9",
+      "release_date": "2024-01-09",
+      "vote_average": 8.3
+    },
+    {
+      "id": 10,
+      "title": "Movie 10",
+      "poster_path": "/test-poster-10.jpg",
+      "overview": "Test overview 10",
+      "release_date": "2024-01-10",
+      "vote_average": 7.1
+    },
+    {
+      "id": 11,
+      "title": "Movie 11",
+      "poster_path": "/test-poster-11.jpg",
+      "overview": "Test overview 11",
+      "release_date": "2024-01-11",
+      "vote_average": 6.7
+    },
+    {
+      "id": 12,
+      "title": "Movie 12",
+      "poster_path": "/test-poster-12.jpg",
+      "overview": "Test overview 12",
+      "release_date": "2024-01-12",
+      "vote_average": 8.0
+    },
+    {
+      "id": 13,
+      "title": "Movie 13",
+      "poster_path": "/test-poster-13.jpg",
+      "overview": "Test overview 13",
+      "release_date": "2024-01-13",
+      "vote_average": 7.4
+    },
+    {
+      "id": 14,
+      "title": "Movie 14",
+      "poster_path": "/test-poster-14.jpg",
+      "overview": "Test overview 14",
+      "release_date": "2024-01-14",
+      "vote_average": 7.7
+    },
+    {
+      "id": 15,
+      "title": "Movie 15",
+      "poster_path": "/test-poster-15.jpg",
+      "overview": "Test overview 15",
+      "release_date": "2024-01-15",
+      "vote_average": 8.2
+    },
+    {
+      "id": 16,
+      "title": "Movie 16",
+      "poster_path": "/test-poster-16.jpg",
+      "overview": "Test overview 16",
+      "release_date": "2024-01-16",
+      "vote_average": 6.9
+    },
+    {
+      "id": 17,
+      "title": "Movie 17",
+      "poster_path": "/test-poster-17.jpg",
+      "overview": "Test overview 17",
+      "release_date": "2024-01-17",
+      "vote_average": 7.3
+    },
+    {
+      "id": 18,
+      "title": "Movie 18",
+      "poster_path": "/test-poster-18.jpg",
+      "overview": "Test overview 18",
+      "release_date": "2024-01-18",
+      "vote_average": 7.8
+    },
+    {
+      "id": 19,
+      "title": "Movie 19",
+      "poster_path": "/test-poster-19.jpg",
+      "overview": "Test overview 19",
+      "release_date": "2024-01-19",
+      "vote_average": 8.1
+    },
+    {
+      "id": 20,
+      "title": "Movie 20",
+      "poster_path": "/test-poster-20.jpg",
+      "overview": "Test overview 20",
+      "release_date": "2024-01-20",
+      "vote_average": 7.6
+    }
+  ]
+}

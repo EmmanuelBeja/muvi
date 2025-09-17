@@ -2,6 +2,12 @@ import noData from '@/assets/shared/noData.svg';
 import { CircleAlert } from 'lucide-react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
+/**
+ * NoData component
+ * Displays a message and icon when there is no data to show.
+ * @param message - Optional message to display.
+ * @param withIcon - Whether to show the icon.
+ */
 const NoData = ({
   message,
   withIcon,

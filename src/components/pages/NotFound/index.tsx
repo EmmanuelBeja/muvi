@@ -1,5 +1,9 @@
 import { Link } from '@tanstack/react-router';
 
+/**
+ * NotFound component
+ * Displays a 404 error page when a route is not found.
+ */
 const NotFound = () => {
   return (
     <div className="flex flex-col justify-center items-center h-[80vh] text-center">

@@ -9,6 +9,12 @@ import {
 } from '@/components/ui/carousel';
 import CastCrewCard from './CastCrewCard';
 
+/**
+ * CastCrew component
+ * Displays a carousel of cast or crew members for a movie.
+ * @param castCrew - Array of cast/crew members.
+ * @param title - Section title for the carousel.
+ */
 const CastCrew = ({
   castCrew,
   title,

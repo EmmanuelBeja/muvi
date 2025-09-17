@@ -10,7 +10,7 @@ This project demonstrates a modern frontend stack with clean state management, r
 The UI/UX designs were created in **Figma**.  
 👉 [View full Figma file](https://www.figma.com/proto/uOhjpyhNqxcMKZHh0sww4T/Movies?node-id=13-21&t=fre0YNCmw8fqB5Jt-1&scaling=contain&content-scaling=fixed&page-id=0%3A1)
 
-For exported design screenshots, see [`/docs/design/`](./docs/design/README.md).
+For exported design screenshots, see [`/docs/design/`](./docs/designs/README.md).
 
 ---
 

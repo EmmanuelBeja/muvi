@@ -1,0 +1,14 @@
+{
+  "id": 1311031,
+  "title": "Fake Movie",
+  "poster_path": "/test-poster-1.jpg",
+  "overview": "This is a fake movie overview.",
+  "release_date": "2024-01-01",
+  "vote_average": 8.5,
+  "runtime": 120,
+  "homepage": "https://fakehomepage.com",
+  "genres": [
+    { "id": 28, "name": "Action" },
+    { "id": 12, "name": "Adventure" }
+  ]
+}

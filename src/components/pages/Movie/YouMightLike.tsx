@@ -22,7 +22,10 @@ const YouMightLike = ({ movieId }: { movieId: number }) => {
             ?.slice(0, 4)
             ?.map((movie: MovieType) => (
               <li key={movie.id} className="bg-white shadow p-3 rounded-lg">
-                <MovieCard movie={movie} />
+                <MovieCard
+                  movie={movie}
+                  imgClassName="rounded w-full h-[200px]"
+                />
               </li>
             ))}
         </ul>

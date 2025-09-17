@@ -3,8 +3,17 @@ import type { Movie } from '@/app/types';
 import moviePlaceholder from '@/assets/pages/movies/moviePlaceholder.jpg';
 import { Link } from '@tanstack/react-router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { cn } from '../../../lib/utils';
 
-const MovieCard = ({ movie }: { movie: Movie }) => {
+const MovieCard = ({
+  movie,
+  imgClassName,
+  onClick,
+}: {
+  movie: Movie;
+  imgClassName?: string;
+  onClick?: VoidFunction;
+}) => {
   // prefetch movie details on hover
   const prefetchMovie = usePrefetchMovie();
 
@@ -12,6 +21,7 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
     <Link
       to={`/movies/${movie.id}`}
       onMouseEnter={() => prefetchMovie(movie.id)}
+      onClick={() => (onClick ? onClick() : '')}
     >
       <LazyLoadImage
         effect="blur"
@@ -21,7 +31,7 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
             : moviePlaceholder
         }
         alt={movie.title}
-        className="rounded w-full h-[350px]"
+        className={cn(imgClassName || 'rounded w-full h-[350px]')}
       />
       <h3
         className="mt-2 font-medium text-sm truncate"

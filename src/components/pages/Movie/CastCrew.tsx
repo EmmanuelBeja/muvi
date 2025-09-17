@@ -28,9 +28,9 @@ const CastCrew = ({
           className="justify-center w-full"
         >
           <CarouselContent>
-            {castCrew?.map((castCrewMember) => (
+            {castCrew?.map((castCrewMember, idx) => (
               <CarouselItem
-                key={`${castCrewMember.id}-cast-crew-member`}
+                key={`${castCrewMember.id}-cast-crew-member-${idx}`}
                 className="md:basis-1/2 lg:basis-1/5"
               >
                 <CastCrewCard castCrewMember={castCrewMember} />

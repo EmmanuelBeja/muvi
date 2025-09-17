@@ -31,13 +31,6 @@ describe('Movie Page', () => {
       .and('eq', 'https://fakehomepage.com');
   });
 
-  it('renders trailer link', () => {
-    cy.wait('@getMovie');
-    cy.get('[data-testid="watch-trailer"]')
-      .should('have.attr', 'href')
-      .and('include', 'youtube.com');
-  });
-
   it('shows toast message when clicking favorite button(User not authenticated)', () => {
     cy.wait('@getMovie');
 

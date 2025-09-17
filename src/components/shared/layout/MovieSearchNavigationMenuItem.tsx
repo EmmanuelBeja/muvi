@@ -16,6 +16,7 @@ import { Search, X } from 'lucide-react';
 import { useState } from 'react';
 
 const MovieSearchNavigationMenuItem = () => {
+  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 700);
 
@@ -23,7 +24,7 @@ const MovieSearchNavigationMenuItem = () => {
     useFetchMovieSearch(debouncedQuery);
 
   return (
-    <Drawer>
+    <Drawer open={drawerIsOpen} onOpenChange={setDrawerIsOpen}>
       <DrawerTrigger asChild data-testid="search-nav-bar-button">
         <Button className="bg-transparent hover:bg-primary/60 hover:drop-shadow-lg font-semibold text-[18px] text-white hover:text-secondary">
           <Search />
@@ -71,9 +72,10 @@ const MovieSearchNavigationMenuItem = () => {
                   className="bg-white shadow p-3 rounded-lg"
                   data-testid="search-result"
                 >
-                  <DrawerClose asChild>
-                    <MovieCard movie={movie} />
-                  </DrawerClose>
+                  <MovieCard
+                    movie={movie}
+                    onClick={() => setDrawerIsOpen(false)}
+                  />
                 </li>
               ))}
             </ul>

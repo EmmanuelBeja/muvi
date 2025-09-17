@@ -6,6 +6,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { Link } from '@tanstack/react-router';
+import MovieSearchNavigationMenuItem from './MovieSearchNavigationMenuItem';
 
 export function Navbar() {
   return (
@@ -15,6 +16,14 @@ export function Navbar() {
           🍿 movies
         </Link>
         <NavigationMenuList className="flex items-center space-x-2">
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <MovieSearchNavigationMenuItem />
+            </NavigationMenuLink>
+          </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink
               asChild

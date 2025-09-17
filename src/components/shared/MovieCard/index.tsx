@@ -48,6 +48,9 @@ const MovieCard = ({
       >
         {movie.title}
       </h3>
+      <p className="mt-1 text-muted-foreground text-xs truncate">
+        {movie.overview}
+      </p>
     </Link>
   );
 };

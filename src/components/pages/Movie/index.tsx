@@ -27,7 +27,7 @@ const Movie = () => {
     );
 
   return (
-    <div className="min-h-[85vh]">
+    <div className="min-h-[90vh]">
       {/* title */}
       <div className="flex items-center space-x-2 mb-2">
         <Link to="/movies" className="block">

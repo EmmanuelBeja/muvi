@@ -18,7 +18,7 @@ const Favourites = () => {
 
   // Render the favourites page UI
   return (
-    <div className="min-h-[85vh]">
+    <div className="min-h-[90vh]">
       {/* Title and back button */}
       <div className="flex items-center space-x-2 mb-2">
         <Link to="/movies" className="block">

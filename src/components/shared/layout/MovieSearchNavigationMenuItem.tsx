@@ -64,6 +64,7 @@ const MovieSearchNavigationMenuItem = () => {
               placeholder="Search For a Movie"
               className="shadow-none drop-shadow-none border-none rounded-0"
               value={query}
+              autoFocus
               onChange={(e) => setQuery(e.target.value)} // Update query state on input change
             />
           </div>

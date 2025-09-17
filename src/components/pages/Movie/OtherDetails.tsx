@@ -32,7 +32,10 @@ const OtherDetails = ({ movieDetails }: { movieDetails: MovieDetails }) => {
       </div>
       {/* genres */}
       {movieDetails?.genres.map((genre: { id: number; name: string }) => (
-        <div className="mr-1 px-2 border border-tertiary rounded text-tertiary">
+        <div
+          className="mr-1 px-2 border border-tertiary rounded text-tertiary"
+          key={`${genre}-genre`}
+        >
           {genre.name}
         </div>
       ))}

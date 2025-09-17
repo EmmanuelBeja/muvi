@@ -39,7 +39,7 @@ const FavoritesList = () => {
           <NoData withIcon />
         </div>
       ) : (
-        <ul className="gap-4 grid grid-cols-2 md:grid-cols-4 p-2 h-[75vh] overflow-y-scroll">
+        <ul className="gap-4 grid grid-cols-2 md:grid-cols-4">
           {/* Render each favorite movie as a card */}
           {favoriteMovies.map((m: Movie) => (
             <li key={m.id} className="bg-white shadow p-3 rounded-lg">

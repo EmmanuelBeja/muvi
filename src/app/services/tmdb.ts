@@ -6,6 +6,7 @@ const api = axios.create({
   params: { api_key: import.meta.env.VITE_APP_TMDB_API_KEY },
 });
 
+// Movie APIs
 export async function fetchMovies(category: MovieCategories, page = 1) {
   const res = await api.get(`/movie/${category}`, {
     params: { page },

@@ -1,13 +1,44 @@
 import { useFetchMovieAccountState } from '@/app/hooks/useFetchMovieAccountState';
 import { useFetchMovieVideos } from '@/app/hooks/useFetchMovieVideos';
+import { markMovieAsFavorite } from '@/app/services/tmdb';
+import { useAuthStore } from '@/app/store/useAuthStore';
 import type { MovieDetails } from '@/app/types';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { Heart, Play, SquareArrowOutUpRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
+  const accountId = useAuthStore.getState().accountId;
+  const sessionId = useAuthStore.getState().sessionId;
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (fav: boolean) => {
+      if (!accountId || !sessionId) {
+        throw new Error('User not authenticated');
+      }
+      return markMovieAsFavorite(accountId, sessionId, movieDetails.id, fav);
+    },
+    onSuccess: (_, fav) => {
+      if (accountId) {
+        queryClient.invalidateQueries({
+          queryKey: ['favorites', accountId],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['movie-account-state', movieDetails?.id],
+        });
+      }
+      toast.success(fav ? 'Added to favorites!' : 'Removed from favorites!');
+    },
+    onError: (e) => {
+      const message = e instanceof Error ? e.message : 'Unknown error';
+      toast.error(`Something went wrong, please try again: ${message}`);
+    },
+  });
+
   const { data: movieVideos } = useFetchMovieVideos(movieDetails?.id);
   const { data: movieAccountState, isLoading: isLoadingMovieAccountState } =
     useFetchMovieAccountState(movieDetails?.id);
@@ -17,7 +48,13 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
       ? movieAccountState?.favorite
       : false;
 
-  const toggleFavorite = () => toast('Please login to favourite movies');
+  const toggleFavorite = () => {
+    if (!sessionId) {
+      toast('Please login to favourite movies');
+      return;
+    }
+    mutation.mutate(!isFavorite);
+  };
 
   return (
     <div

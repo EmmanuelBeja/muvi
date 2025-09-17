@@ -3,6 +3,11 @@ import castCrewPlaceholder from '@/assets/pages/movies/$movieId/crewPlaceholder.
 import { Card, CardContent } from '@/components/ui/card';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
+/**
+ * CastCrewCard component
+ * Displays a card for a cast or crew member with image, name, and role/job.
+ * @param castCrewMember - Cast or crew member object to display.
+ */
 const CastCrewCard = ({ castCrewMember }: { castCrewMember: CastCrewType }) => {
   return (
     <Card className="px-0 w-full">

@@ -5,6 +5,14 @@ import { Link } from '@tanstack/react-router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { cn } from '../../../lib/utils';
 
+/**
+ * MovieCard component
+ * Displays a single movie card with image and title.
+ * Prefetches movie details on hover.
+ * @param movie - Movie object to display.
+ * @param imgClassName - Optional image class name for styling.
+ * @param onClick - Optional click handler for the card.
+ */
 const MovieCard = ({
   movie,
   imgClassName,

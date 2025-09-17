@@ -1,5 +1,10 @@
+// Import movieCategories for type inference
 import type { movieCategories } from '../constants';
 
+/**
+ * Movie type
+ * Represents a movie object returned from TMDB API
+ */
 export type Movie = {
   id: number;
   title: string;
@@ -17,6 +22,10 @@ export type Movie = {
   vote_count: number;
 };
 
+/**
+ * Cast type
+ * Represents a cast member in a movie
+ */
 export type Cast = {
   adult: boolean;
   cast_id: number;
@@ -32,6 +41,10 @@ export type Cast = {
   profile_path: string;
 };
 
+/**
+ * Crew type
+ * Represents a crew member in a movie
+ */
 export type Crew = {
   adult: boolean;
   credit_id: string;
@@ -46,8 +59,16 @@ export type Crew = {
   profile_path: string;
 };
 
+/**
+ * CastCrew type
+ * Combines Cast and Crew types
+ */
 export type CastCrew = Cast & Crew;
 
+/**
+ * MovieDetails type
+ * Represents detailed information about a movie, including credits and metadata
+ */
 export type MovieDetails = {
   adult: boolean;
   backdrop_path: string | null;
@@ -101,5 +122,8 @@ export type MovieDetails = {
   vote_count: number;
 };
 
-// infer types
+/**
+ * MovieCategories type
+ * Infers valid movie category keys from movieCategories constant
+ */
 export type MovieCategories = (typeof movieCategories)[number];

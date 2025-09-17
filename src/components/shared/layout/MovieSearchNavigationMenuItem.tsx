@@ -15,16 +15,24 @@ import { cn } from '@/lib/utils';
 import { Search, X } from 'lucide-react';
 import { useState } from 'react';
 
+// MovieSearchNavigationMenuItem component
+// Provides a navigation menu item for searching movies with a drawer UI
 const MovieSearchNavigationMenuItem = () => {
+  // State to control drawer open/close
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  // State for search query input
   const [query, setQuery] = useState('');
+  // Debounce the query to avoid excessive API calls
   const debouncedQuery = useDebounce(query, 700);
 
+  // Fetch movies matching the debounced search query
   const { data: moviesData = [], isLoading } =
     useFetchMovieSearch(debouncedQuery);
 
+  // Render the drawer and search UI
   return (
     <Drawer open={drawerIsOpen} onOpenChange={setDrawerIsOpen}>
+      {/* Button to open the search drawer */}
       <DrawerTrigger asChild data-testid="search-nav-bar-button">
         <Button className="bg-transparent hover:bg-primary/60 hover:drop-shadow-lg font-semibold text-[18px] text-white hover:text-secondary">
           <Search />
@@ -38,6 +46,7 @@ const MovieSearchNavigationMenuItem = () => {
             moviesData?.length > 0 ? 'h-[100vh]' : ''
           )}
         >
+          {/* Button to close the drawer */}
           <DrawerClose asChild>
             <Button
               data-testid="search-drawer-close-button"
@@ -47,7 +56,7 @@ const MovieSearchNavigationMenuItem = () => {
               <X />
             </Button>
           </DrawerClose>
-          {/* search input */}
+          {/* Search input field */}
           <div className="group flex space-x-1 mx-auto p-4 pb-0 border-1 w-full max-w-sm">
             <Search className="my-auto text-tertiary group-hover:animate-pulse" />
             <Input
@@ -55,17 +64,18 @@ const MovieSearchNavigationMenuItem = () => {
               placeholder="Search For a Movie"
               className="shadow-none drop-shadow-none border-none rounded-0"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => setQuery(e.target.value)} // Update query state on input change
             />
           </div>
 
+          {/* Show loading spinner while fetching results */}
           {isLoading ? (
             <div className="flex justify-center items-center w-full h-[50vh]">
               <Preloader />
             </div>
           ) : (
             <ul className="gap-4 grid grid-cols-2 md:grid-cols-4 mx-auto p-4 pb-20 max-w-6xl h-full overflow-y-scroll">
-              {/* search result */}
+              {/* Render search results as MovieCard components */}
               {moviesData.map((movie: Movie) => (
                 <li
                   key={movie.id}
@@ -74,6 +84,7 @@ const MovieSearchNavigationMenuItem = () => {
                 >
                   <MovieCard
                     movie={movie}
+                    // When a movie card is clicked, close the drawer
                     onClick={() => setDrawerIsOpen(false)}
                   />
                 </li>

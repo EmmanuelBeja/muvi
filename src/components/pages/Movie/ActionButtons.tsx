@@ -10,18 +10,32 @@ import { Link } from '@tanstack/react-router';
 import { Heart, Play, SquareArrowOutUpRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+/**
+ * ActionButtons component
+ * Renders action buttons for a movie (favorite, play, external link).
+ * Handles favorite mutation and user feedback.
+ * @param movieDetails - Details of the movie to display actions for.
+ */
+
 const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
+  // Get user account and session info from store
   const accountId = useAuthStore.getState().accountId;
   const sessionId = useAuthStore.getState().sessionId;
 
+  // Get React Query client for cache management
   const queryClient = useQueryClient();
+
+  // Mutation for marking movie as favorite
   const mutation = useMutation({
+    // Function to call when toggling favorite
     mutationFn: (fav: boolean) => {
       if (!accountId || !sessionId) {
         throw new Error('User not authenticated');
       }
+      // Call API to mark/unmark favorite
       return markMovieAsFavorite(accountId, sessionId, movieDetails.id, fav);
     },
+    // On success, invalidate relevant queries and show toast
     onSuccess: (_, fav) => {
       if (accountId) {
         queryClient.invalidateQueries({
@@ -33,21 +47,25 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
       }
       toast.success(fav ? 'Added to favorites!' : 'Removed from favorites!');
     },
+    // On error, show error toast
     onError: (e) => {
       const message = e instanceof Error ? e.message : 'Unknown error';
       toast.error(`Something went wrong, please try again: ${message}`);
     },
   });
 
+  // Fetch movie videos and account state
   const { data: movieVideos } = useFetchMovieVideos(movieDetails?.id);
   const { data: movieAccountState, isLoading: isLoadingMovieAccountState } =
     useFetchMovieAccountState(movieDetails?.id);
 
+  // Determine if movie is currently a favorite
   const isFavorite =
     !isLoadingMovieAccountState && movieAccountState?.favorite
       ? movieAccountState?.favorite
       : false;
 
+  // Function to toggle favorite status
   const toggleFavorite = () => {
     if (!sessionId) {
       toast('Please login to favourite movies');
@@ -56,6 +74,7 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
     mutation.mutate(!isFavorite);
   };
 
+  // Render action buttons: Learn More, Favorite, Watch Trailer
   return (
     <div
       className={cn(
@@ -65,7 +84,7 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
           : 'md:grid-cols-2'
       )}
     >
-      {/* learn more */}
+      {/* Learn more button if homepage exists */}
       {movieDetails?.homepage ? (
         <Link
           data-testid="learn-more"
@@ -79,7 +98,7 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
         </Link>
       ) : null}
 
-      {/* favourite */}
+      {/* Favorite button */}
       <Button
         data-testid="favorite-movie"
         className="flex justify-center items-center gap-x-2 bg-secondary hover:bg-secondary/90 rounded w-full text-white"
@@ -89,7 +108,7 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
         {isFavorite ? 'Remove Favourite' : 'Favourite'}
       </Button>
 
-      {/* trailer */}
+      {/* Trailer button if YouTube video exists */}
       {movieVideos?.length && movieVideos[0]?.site === 'YouTube' ? (
         <Link
           to={`https://www.youtube.com/watch?v=${movieVideos[0]?.key}`}

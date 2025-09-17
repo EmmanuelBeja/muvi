@@ -9,6 +9,10 @@ import Overview from './Overview';
 import Poster from './Poster';
 import YouMightLike from './YouMightLike';
 
+/**
+ * Movie component
+ * Displays details for a single movie, including poster, overview, cast/crew, and recommendations.
+ */
 const Movie = () => {
   const { movieId } = useParams({ from: '/movies/$movieId' });
 

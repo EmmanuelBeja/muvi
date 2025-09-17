@@ -27,7 +27,7 @@ const Movie = () => {
     );
 
   return (
-    <>
+    <div className="min-h-[85vh]">
       {/* title */}
       <div className="flex items-center space-x-2 mb-2">
         <Link to="/movies" className="block">
@@ -59,7 +59,7 @@ const Movie = () => {
         <CastCrew castCrew={movieDetails?.credits?.cast || []} title="Cast" />
         <CastCrew castCrew={movieDetails?.credits?.crew || []} title="Crew" />
       </div>
-    </>
+    </div>
   );
 };
 

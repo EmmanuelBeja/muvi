@@ -10,16 +10,22 @@ import {
 import { Link } from '@tanstack/react-router';
 import MovieSearchNavigationMenuItem from './MovieSearchNavigationMenuItem';
 
+// Navbar component
+// Renders the top navigation bar with search, favourites, login/logout
 export function Navbar() {
+  // Get sessionId and logout function from auth store
   const { sessionId, logout } = useAuthStore();
 
+  // Render navigation menu
   return (
-    <NavigationMenu className="justify-center bg-primary">
+    <NavigationMenu className="top-0 z-50 sticky justify-center bg-primary shadow">
       <div className="flex justify-between p-4 w-full max-w-6xl">
+        {/* Logo/Home link */}
         <Link to="/" className="font-extrabold text-[30px] text-white">
           🍿 movies
         </Link>
         <NavigationMenuList className="flex items-center space-x-2">
+          {/* Search menu item */}
           <NavigationMenuItem>
             <NavigationMenuLink
               asChild
@@ -28,6 +34,7 @@ export function Navbar() {
               <MovieSearchNavigationMenuItem />
             </NavigationMenuLink>
           </NavigationMenuItem>
+          {/* Favourites link, only if logged in */}
           {sessionId ? (
             <NavigationMenuItem>
               <NavigationMenuLink
@@ -43,6 +50,7 @@ export function Navbar() {
               </NavigationMenuLink>
             </NavigationMenuItem>
           ) : null}
+          {/* Login/Logout button depending on auth state */}
           <NavigationMenuItem>
             <NavigationMenuLink
               asChild
@@ -50,7 +58,7 @@ export function Navbar() {
             >
               {sessionId ? (
                 <Button
-                  onClick={() => logout()}
+                  onClick={() => logout()} // Logout when clicked
                   className="bg-transparent hover:bg-primary/60 hover:drop-shadow-lg font-semibold text-white hover:text-secondary"
                 >
                   Logout

@@ -2,6 +2,11 @@ import { fetchMovies } from '@/app/services/tmdb';
 import type { MovieCategories } from '@/app/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
+/**
+ * useFetchMovies hook
+ * Fetches movies by category with infinite scrolling support
+ * Uses React Query's useInfiniteQuery for pagination
+ */
 export function useFetchMovies(movieCategory: MovieCategories) {
   return useInfiniteQuery({
     queryKey: ['movies', movieCategory],

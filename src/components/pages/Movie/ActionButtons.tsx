@@ -43,8 +43,6 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
   const { data: movieAccountState, isLoading: isLoadingMovieAccountState } =
     useFetchMovieAccountState(movieDetails?.id);
 
-  console.log({ movieVideos });
-
   const isFavorite =
     !isLoadingMovieAccountState && movieAccountState?.favorite
       ? movieAccountState?.favorite

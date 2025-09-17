@@ -3,7 +3,7 @@ import { SquareArrowOutUpRight } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <div className="grid md:grid-cols-2 shadow-lg drop-shadow-lg mt-6 border-primary border-t w-full gri-cols-1">
+    <div className="grid grid-cols-1 md:grid-cols-2 shadow-lg drop-shadow-lg mt-6 border-primary border-t w-full">
       <div className="flex justify-center items-center bg-primary py-6 text-white">
         Powered by{' '}
         <Link
@@ -12,7 +12,7 @@ const Footer = () => {
           rel="noopener noreferrer"
           className="flex items-center space-x-1 pl-1 text-secondary underline"
         >
-          TMDD <SquareArrowOutUpRight className="h-[12px]" />
+          TMDB <SquareArrowOutUpRight className="h-[12px]" />
         </Link>
       </div>
       <div className="flex justify-center items-center bg-white py-6">

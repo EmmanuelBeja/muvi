@@ -1,0 +1,15 @@
+{
+  "page": 2,
+  "total_pages": 3,
+  "total_results": 60,
+  "results": [
+    {
+      "id": 103,
+      "title": "Popular Movie 3",
+      "poster_path": "/popular-poster-3.jpg",
+      "overview": "Popular movie overview 3",
+      "release_date": "2024-02-03",
+      "vote_average": 8.6
+    }
+  ]
+}

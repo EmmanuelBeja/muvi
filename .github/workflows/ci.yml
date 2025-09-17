@@ -1,0 +1,46 @@
+# .github/workflows/ci.yml
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    env:
+      VITE_APP_API_BASE_URL: https://api.themoviedb.org/3
+      VITE_APP_TMDB_API_KEY: ${{ secrets.VITE_APP_TMDB_API_KEY }}
+
+    steps:
+      # Checkout your code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup Node.js (adjust version if needed)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # node-version: 22.12.0
+          node-version-file: '.nvmrc'
+          cache: "npm"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build App
+      - name: Build app
+        run: npm run build
+
+      # Run linting
+      - name: Run ESLint
+        run: npm run lint
+
+      # Run unit tests
+      - name: Run tests
+        run: npm test

@@ -1,0 +1,23 @@
+{
+  "page": 2,
+  "total_pages": 5,
+  "total_results": 100,
+  "results": [
+    {
+      "id": 21,
+      "title": "Movie 21",
+      "poster_path": "/test-poster-21.jpg",
+      "overview": "Test overview 21",
+      "release_date": "2024-01-21",
+      "vote_average": 7.0
+    },
+    {
+      "id": 22,
+      "title": "Movie 22",
+      "poster_path": "/test-poster-22.jpg",
+      "overview": "Test overview 22",
+      "release_date": "2024-01-22",
+      "vote_average": 8.4
+    }
+  ]
+}

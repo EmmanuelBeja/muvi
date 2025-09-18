@@ -7,7 +7,5 @@ import React from 'react';
  */
 export default function App({ children }: { children: React.ReactNode }) {
   // Render children inside a styled div
-  return (
-    <div className="bg-slate-50 min-h-screen text-primary">{children}</div>
-  );
+  return <div className="min-h-screen text-primary">{children}</div>;
 }

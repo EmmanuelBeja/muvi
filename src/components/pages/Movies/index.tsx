@@ -41,7 +41,7 @@ const Movies = () => {
 
   // Render movies list and category selector
   return (
-    <div className="min-h-[90vh]">
+    <div className="">
       {/* Category title */}
       <h2 className="py-2 font-semibold text-[30px] capitalize">
         {movieCategoriesMap[movieCategory]} movies

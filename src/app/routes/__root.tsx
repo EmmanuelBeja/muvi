@@ -18,7 +18,7 @@ export const Route = createRootRoute({
         {/* Navigation bar */}
         <Navbar />
         {/* Main content area */}
-        <div className="mx-auto p-4 max-w-6xl">
+        <div className="mx-auto p-4 max-w-6xl min-h-screen">
           {/* Show greeting if user is logged in */}
           {accountUsername ? (
             <div className="font-semibold text-sm">

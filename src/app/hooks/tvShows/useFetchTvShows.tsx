@@ -1,16 +1,16 @@
-import { fetchMovies } from '@/app/services/tmdb';
-import type { MovieCategories } from '@/app/types';
+import { fetchTvShows } from '@/app/services/tvShows';
+import type { TVShowCategories } from '@/app/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 /**
- * useFetchMovies hook
- * Fetches movies by category with infinite scrolling support
+ * useFetchTVShows hook
+ * Fetches TV shows by category with infinite scrolling support
  * Uses React Query's useInfiniteQuery for pagination
  */
-export function useFetchMovies(movieCategory: MovieCategories) {
+export function useFetchTvShows(category: TVShowCategories) {
   return useInfiniteQuery({
-    queryKey: ['movies', movieCategory],
-    queryFn: ({ pageParam = 1 }) => fetchMovies(movieCategory, pageParam),
+    queryKey: ['tv-Shows', category],
+    queryFn: ({ pageParam = 1 }) => fetchTvShows(category, pageParam),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total_pages) {
         return lastPage.page + 1;

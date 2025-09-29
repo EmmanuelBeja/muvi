@@ -1,8 +1,8 @@
+import { createSession, fetchAccount } from '@/app/services/auth';
+import { useAuthStore } from '@/app/store/useAuthStore';
+import Preloader from '@/components/shared/Preloader';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { createSession, fetchAccount } from '../../../app/services/tmdb';
-import { useAuthStore } from '../../../app/store/useAuthStore';
-import Preloader from '../../shared/Preloader';
 
 /**
  * TMDBCallback component

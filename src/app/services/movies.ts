@@ -1,13 +1,6 @@
-import type { MovieCategories } from '@/app/types';
-import axios from 'axios';
-
-// Axios instance configured for TMDB API
-const api = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_BASE_URL,
-  params: { api_key: import.meta.env.VITE_APP_TMDB_API_KEY },
-});
-
 // Movie APIs
+import type { MovieCategories } from '@/app/types';
+import api from './api';
 
 /**
  * Fetches movies by category and page
@@ -77,17 +70,19 @@ export async function markMovieAsFavorite(
  */
 export async function fetchFavoriteMovies(
   accountId: number,
-  sessionId: string
+  sessionId: string,
+  page = 1
 ) {
-  const { data } = await api.get(`/account/${accountId}/favorite/movies`, {
+  const res = await api.get(`/account/${accountId}/favorite/movies`, {
     params: {
       session_id: sessionId,
       language: 'en-US',
       sort_by: 'created_at.desc',
-      page: 1,
+      page,
     },
   });
-  return data.results; // array of movies
+
+  return res.data; // array of movies
 }
 
 /**
@@ -116,34 +111,4 @@ export async function searchMovies(query: string) {
     },
   });
   return res.data.results;
-}
-
-// Auth APIs
-
-/**
- * Fetches a new request token for authentication
- */
-export async function fetchRequestToken() {
-  const { data } = await api.get(`/authentication/token/new`);
-  return data.request_token;
-}
-
-/**
- * Creates a new session using a request token
- */
-export async function createSession(requestToken: string) {
-  const { data } = await api.post(`/authentication/session/new`, {
-    request_token: requestToken,
-  });
-  return data.session_id;
-}
-
-/**
- * Fetches account details for the authenticated user
- */
-export async function fetchAccount(sessionId: string) {
-  const { data } = await api.get(`/account`, {
-    params: { session_id: sessionId },
-  });
-  return data;
 }

@@ -2,7 +2,7 @@ import {
   fetchMovieDetails,
   fetchMovieRecommendations,
   fetchMovieVideos,
-} from '@/app/services/tmdb';
+} from '@/app/services/movies';
 import { useQueryClient } from '@tanstack/react-query';
 
 /**

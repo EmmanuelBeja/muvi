@@ -1,11 +1,10 @@
-// Import movieCategories for type inference
-import type { movieCategories } from '../constants';
+import type { MOVIE_CATEGORIES, TV_SHOW_CATEGORIES } from '../constants';
 
 /**
- * Movie type
- * Represents a movie object returned from TMDB API
+ * Media type
+ * Represents a media object returned from TMDB API
  */
-export type Movie = {
+export type Media = {
   id: number;
   title: string;
   overview: string;
@@ -20,6 +19,12 @@ export type Movie = {
   video: boolean;
   vote_average: number; // can have decimals
   vote_count: number;
+
+  // TV show specific fields (for type reuse)
+  name?: string;
+  original_name?: string;
+  first_air_date?: string;
+  origin_country?: string[];
 };
 
 /**
@@ -66,10 +71,10 @@ export type Crew = {
 export type CastCrew = Cast & Crew;
 
 /**
- * MovieDetails type
- * Represents detailed information about a movie, including credits and metadata
+ * MediaDetails type
+ * Represents detailed information about a movie/tv show, including credits and metadata
  */
-export type MovieDetails = {
+export type MediaDetails = {
   adult: boolean;
   backdrop_path: string | null;
   belongs_to_collection: {
@@ -120,10 +125,21 @@ export type MovieDetails = {
   video: boolean;
   vote_average: number;
   vote_count: number;
+
+  // TV show specific fields (for type reuse)
+  name?: string;
+  original_name?: string;
+  first_air_date?: string;
+  last_air_date?: string;
+  number_of_episodes?: number;
+  number_of_seasons?: number;
+  type?: string;
 };
 
 /**
  * MovieCategories type
- * Infers valid movie category keys from movieCategories constant
+ * Infers valid movie category keys from MOVIE_CATEGORIES constant
  */
-export type MovieCategories = (typeof movieCategories)[number];
+export type MovieCategories = (typeof MOVIE_CATEGORIES)[number];
+
+export type TVShowCategories = (typeof TV_SHOW_CATEGORIES)[number];

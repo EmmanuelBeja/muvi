@@ -1,37 +1,37 @@
-import { MOVIE_CATEGORIES, MOVIE_CATEGORIES_MAP } from '@/app/constants';
-import { useFetchMovies } from '@/app/hooks/movies/useFetchMovies';
-import type { Media, MovieCategories } from '@/app/types';
-import MediaCard from '@/components/shared/Media/MediaCard';
+import { TV_SHOW_CATEGORIES, TV_SHOW_CATEGORIES_MAP } from '@/app/constants';
+import { useFetchTvShows } from '@/app/hooks/tvShows/useFetchTvShows';
+import type { Media, TVShowCategories } from '@/app/types';
 import NoData from '@/components/shared/NoData';
 import Preloader from '@/components/shared/Preloader';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Link, useSearch } from '@tanstack/react-router';
+import MediaCard from '../../shared/Media/MediaCard';
 
 /**
- * Movies component
- * Displays a list of movies by category, with loading and no-data states.
- * Fetches movies and handles pagination.
+ * TvShows component
+ * Displays a list of tvShows by category, with loading and no-data states.
+ * Fetches tvShows and handles pagination.
  */
-const Movies = () => {
+const TvShows = () => {
   // Get search params from router (category)
-  const search = useSearch({ from: '/movies/' });
-  // Determine current movie category, default to 'now_playing'
-  const movieCategory: MovieCategories = search?.category || 'now_playing';
+  const search = useSearch({ from: '/tv-shows/' });
+  // Determine current tvShow category, default to 'popular'
+  const tvShowCategory: TVShowCategories = search?.category || 'popular';
 
-  // Fetch movies for the selected category
+  // Fetch tvShows for the selected category
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useFetchMovies(movieCategory);
+    useFetchTvShows(tvShowCategory);
 
-  // Flatten paginated movie results into a single array
-  const moviesData: Media[] = [];
+  // Flatten paginated tvShow results into a single array
+  const tvShowsData: Media[] = [];
   if (data?.pages && data?.pages?.length && data?.pages[0]?.results) {
     data?.pages.map((pageData) => {
-      moviesData.push(...pageData.results);
+      tvShowsData.push(...pageData.results);
     });
   }
 
-  // Show loading spinner while fetching movies
+  // Show loading spinner while fetching tvShows
   if (isLoading)
     return (
       <div className="flex flex-col justify-center items-center w-full h-[80vh]">
@@ -39,43 +39,43 @@ const Movies = () => {
       </div>
     );
 
-  // Render movies list and category selector
+  // Render tvShows list and category selector
   return (
     <div className="">
       {/* Category title */}
       <h2 className="py-2 font-semibold text-[30px] capitalize">
-        {MOVIE_CATEGORIES_MAP[movieCategory]} movies
+        {TV_SHOW_CATEGORIES_MAP[tvShowCategory]} TV Shows
       </h2>
       {/* Category selection buttons */}
-      <div className="flex space-x-2 mb-4 overflow-x-scroll jitems-center">
-        {MOVIE_CATEGORIES.map((movieCategoryItem) => (
+      <div className="flex items-center space-x-2 mb-4 overflow-x-scroll">
+        {TV_SHOW_CATEGORIES.map((tvShowCategoryItem) => (
           <Link
-            key={`${movieCategoryItem}-item`}
-            data-testid={movieCategoryItem}
+            key={`${tvShowCategoryItem}-item`}
+            data-testid={tvShowCategoryItem}
             className={cn(
               'bg-primary hover:bg-primary/90 shadow px-2 py-1 rounded text-primary-foreground',
-              movieCategoryItem === movieCategory
+              tvShowCategoryItem === tvShowCategory
                 ? 'text-white bg-secondary hover:bg-secondary/90 '
                 : ''
             )}
-            to="/movies"
-            search={{ category: movieCategoryItem }}
+            to="/tv-shows/"
+            search={{ category: tvShowCategoryItem }}
           >
-            {MOVIE_CATEGORIES_MAP[movieCategoryItem]}
+            {TV_SHOW_CATEGORIES_MAP[tvShowCategoryItem]}
           </Link>
         ))}
       </div>
-      {/* Show no data message if no movies found */}
-      {moviesData.length === 0 ? (
+      {/* Show no data message if no tvShows found */}
+      {tvShowsData.length === 0 ? (
         <div className="flex justify-center items-center w-full h-[75vh]">
           <NoData withIcon />
         </div>
       ) : (
         <ul className="gap-4 grid grid-cols-2 md:grid-cols-4">
-          {/* Render each movie as a MediaCard */}
-          {moviesData.map((movie) => (
-            <li key={movie.id} className="bg-white shadow p-3 rounded-lg">
-              <MediaCard media={movie} />
+          {/* Render each tvShow as a MediaCard */}
+          {tvShowsData.map((tvShow) => (
+            <li key={tvShow.id} className="bg-white shadow p-3 rounded-lg">
+              <MediaCard media={tvShow} isTvShow />
             </li>
           ))}
         </ul>
@@ -99,4 +99,4 @@ const Movies = () => {
   );
 };
 
-export default Movies;
+export default TvShows;

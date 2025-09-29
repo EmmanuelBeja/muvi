@@ -1,8 +1,11 @@
-import { useFetchMovieAccountState } from '@/app/hooks/useFetchMovieAccountState';
-import { useFetchMovieVideos } from '@/app/hooks/useFetchMovieVideos';
-import { markMovieAsFavorite } from '@/app/services/tmdb';
+import { useFetchMovieAccountState } from '@/app/hooks/movies/useFetchMovieAccountState';
+import { useFetchMovieVideos } from '@/app/hooks/movies/useFetchMovieVideos';
+import { useFetchTvShowAccountState } from '@/app/hooks/tvShows/useFetchTvShowAccountState';
+import { useFetchTvShowVideos } from '@/app/hooks/tvShows/useFetchTvShowVideos';
+import { markMovieAsFavorite } from '@/app/services/movies';
+import { markTvShowAsFavorite } from '@/app/services/tvShows';
 import { useAuthStore } from '@/app/store/useAuthStore';
-import type { MovieDetails } from '@/app/types';
+import type { MediaDetails } from '@/app/types';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -12,12 +15,18 @@ import toast from 'react-hot-toast';
 
 /**
  * ActionButtons component
- * Renders action buttons for a movie (favorite, play, external link).
- * Handles favorite mutation and user feedback.
- * @param movieDetails - Details of the movie to display actions for.
+ * Renders action buttons for a media (favorite, play, external link).
+ * Handles favorite mutations and displays appropriate buttons based on media type.
+ * @param mediaDetails - Details of the Media to display actions for.
  */
 
-const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
+const ActionButtons = ({
+  mediaDetails,
+  isTvShow,
+}: {
+  mediaDetails: MediaDetails;
+  isTvShow?: boolean;
+}) => {
   // Get user account and session info from store
   const accountId = useAuthStore.getState().accountId;
   const sessionId = useAuthStore.getState().sessionId;
@@ -32,19 +41,32 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
       if (!accountId || !sessionId) {
         throw new Error('User not authenticated');
       }
-      // Call API to mark/unmark favorite
-      return markMovieAsFavorite(accountId, sessionId, movieDetails.id, fav);
+      if (isTvShow) {
+        // Call API to mark/unmark favorite
+        return markTvShowAsFavorite(accountId, sessionId, mediaDetails.id, fav);
+      } else {
+        // Call API to mark/unmark favorite
+        return markMovieAsFavorite(accountId, sessionId, mediaDetails.id, fav);
+      }
     },
     // On success, invalidate relevant queries and show toast
     onSuccess: (_, fav) => {
-      if (accountId) {
+      queryClient.invalidateQueries({
+        queryKey: ['favorite-movies', accountId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['favorite-tv-shows', accountId],
+      });
+      if (isTvShow) {
         queryClient.invalidateQueries({
-          queryKey: ['favorites', accountId],
+          queryKey: ['tv-show-account-state', mediaDetails?.id],
         });
+      } else {
         queryClient.invalidateQueries({
-          queryKey: ['movie-account-state', movieDetails?.id],
+          queryKey: ['movie-account-state', mediaDetails?.id],
         });
       }
+
       toast.success(fav ? 'Added to favorites!' : 'Removed from favorites!');
     },
     // On error, show error toast
@@ -55,20 +77,48 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
   });
 
   // Fetch movie videos and account state
-  const { data: movieVideos } = useFetchMovieVideos(movieDetails?.id);
+  const { data: movieVideos } = useFetchMovieVideos(
+    mediaDetails?.id,
+    !isTvShow && !!mediaDetails?.id
+  );
   const { data: movieAccountState, isLoading: isLoadingMovieAccountState } =
-    useFetchMovieAccountState(movieDetails?.id);
+    useFetchMovieAccountState(
+      mediaDetails?.id,
+      !isTvShow && !!mediaDetails?.id
+    );
+
+  // Fetch tv show videos and account state
+  const { data: tvShowVideos } = useFetchTvShowVideos(
+    mediaDetails?.id,
+    !!isTvShow && !!mediaDetails?.id
+  );
+  const { data: tvShowAccountState, isLoading: isLoadingTvShowAccountState } =
+    useFetchTvShowAccountState(
+      mediaDetails?.id,
+      !!isTvShow && !!mediaDetails?.id
+    );
 
   // Determine if movie is currently a favorite
-  const isFavorite =
+  const isMovieFavorite =
     !isLoadingMovieAccountState && movieAccountState?.favorite
       ? movieAccountState?.favorite
       : false;
+  // Determine if tv show is currently a favorite
+  const isTvShowFavorite =
+    !isLoadingTvShowAccountState && tvShowAccountState?.favorite
+      ? tvShowAccountState?.favorite
+      : false;
+
+  // Overall favorite status based on media type
+  const isFavorite = isMovieFavorite || isTvShowFavorite;
+
+  // Get videos based on media type
+  const mediaVideos = isTvShow ? tvShowVideos : movieVideos;
 
   // Function to toggle favorite status
   const toggleFavorite = () => {
     if (!sessionId) {
-      toast('Please login to favourite movies');
+      toast(`Please login to favourite ${isTvShow ? 'tv shows' : 'movies'}`);
       return;
     }
     mutation.mutate(!isFavorite);
@@ -79,17 +129,17 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
     <div
       className={cn(
         'gap-2 grid grid-cols-1',
-        movieVideos?.length && movieVideos[0]?.site === 'YouTube'
+        mediaVideos?.length && mediaVideos[0]?.site === 'YouTube'
           ? 'md:grid-cols-3'
           : 'md:grid-cols-2'
       )}
     >
       {/* Learn more button if homepage exists */}
-      {movieDetails?.homepage ? (
+      {mediaDetails?.homepage ? (
         <Link
           data-testid="learn-more"
           className="flex justify-center items-center gap-x-2 bg-transparent hover:bg-primary/90 border border-primary hover:border-primary/90 rounded w-full text-primary hover:text-primary-foreground"
-          to={movieDetails?.homepage}
+          to={mediaDetails?.homepage}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -109,9 +159,9 @@ const ActionButtons = ({ movieDetails }: { movieDetails: MovieDetails }) => {
       </Button>
 
       {/* Trailer button if YouTube video exists */}
-      {movieVideos?.length && movieVideos[0]?.site === 'YouTube' ? (
+      {mediaVideos?.length && mediaVideos[0]?.site === 'YouTube' ? (
         <Link
-          to={`https://www.youtube.com/watch?v=${movieVideos[0]?.key}`}
+          to={`https://www.youtube.com/watch?v=${mediaVideos[0]?.key}`}
           className="flex justify-center items-center gap-x-2 bg-tertiary hover:bg-tertiary/90 border border-tertiary hover:border-tertiary/90 rounded w-full text-white"
           target="_blank"
           rel="noopener noreferrer"

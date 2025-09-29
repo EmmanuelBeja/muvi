@@ -37,13 +37,16 @@ export const useAuthStore = create<AuthState>()(
       setAccountUsername: (accountUsername) => set({ accountUsername }),
       setRequestToken: (token) => set({ requestToken: token }),
       // Logout resets all state properties
-      logout: () =>
+      logout: () => {
         set({
           sessionId: null,
           accountId: null,
           requestToken: null,
           accountUsername: null,
-        }),
+        });
+        // 👇 then wipe persisted storage
+        localStorage.removeItem('auth-storage');
+      },
     }),
     { name: 'auth-storage' } // localStorage key
   )

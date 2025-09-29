@@ -1,7 +1,6 @@
-import { useDebounce } from '@/app/hooks/useDebounce';
-import { useFetchMovieSearch } from '@/app/hooks/useFetchMovieSearch';
-import type { Movie } from '@/app/types';
-import MovieCard from '@/components/shared/MovieCard';
+import { useFetchMediaSearch } from '@/app/hooks/movies/useFetchMediaSearch';
+import { useDebounce } from '@/app/hooks/shared/useDebounce';
+import MediaCard from '@/components/shared/Media/MediaCard';
 import Preloader from '@/components/shared/Preloader';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,9 +10,11 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { Search, X } from 'lucide-react';
 import { useState } from 'react';
+import NoData from '../NoData';
 
 // MovieSearchNavigationMenuItem component
 // Provides a navigation menu item for searching movies with a drawer UI
@@ -26,8 +27,8 @@ const MovieSearchNavigationMenuItem = () => {
   const debouncedQuery = useDebounce(query, 700);
 
   // Fetch movies matching the debounced search query
-  const { data: moviesData = [], isLoading } =
-    useFetchMovieSearch(debouncedQuery);
+  const { data: mediaData = { movies: [], tvShows: [] }, isLoading } =
+    useFetchMediaSearch(debouncedQuery);
 
   // Render the drawer and search UI
   return (
@@ -43,7 +44,7 @@ const MovieSearchNavigationMenuItem = () => {
           data-testid="search-drawer"
           className={cn(
             'relative w-full h-[70vh]',
-            moviesData?.length > 0 ? 'h-[100vh]' : ''
+            mediaData?.movies[0] || mediaData?.tvShows[0] ? 'h-[100vh]' : ''
           )}
         >
           {/* Button to close the drawer */}
@@ -61,7 +62,7 @@ const MovieSearchNavigationMenuItem = () => {
             <Search className="my-auto text-tertiary group-hover:animate-pulse" />
             <Input
               data-testid="search-input"
-              placeholder="Search For a Movie"
+              placeholder="Search For a Movie/TV Show"
               className="shadow-none drop-shadow-none border-none rounded-0"
               value={query}
               autoFocus
@@ -75,22 +76,81 @@ const MovieSearchNavigationMenuItem = () => {
               <Preloader />
             </div>
           ) : (
-            <ul className="gap-4 grid grid-cols-2 md:grid-cols-4 mx-auto p-4 pb-20 max-w-6xl h-full overflow-y-scroll">
-              {/* Render search results as MovieCard components */}
-              {moviesData.map((movie: Movie) => (
-                <li
-                  key={movie.id}
-                  className="bg-white shadow p-3 rounded-lg h-fit"
-                  data-testid="search-result"
+            <Tabs
+              defaultValue="movies"
+              className="mx-auto px-4 pb-20 max-w-6xl"
+            >
+              <TabsList>
+                <TabsTrigger
+                  value="movies"
+                  className={cn({
+                    'text-primary': mediaData?.movies?.length > 0,
+                  })}
                 >
-                  <MovieCard
-                    movie={movie}
-                    // When a movie card is clicked, close the drawer
-                    onClick={() => setDrawerIsOpen(false)}
-                  />
-                </li>
-              ))}
-            </ul>
+                  Movies
+                </TabsTrigger>
+                <TabsTrigger
+                  value="tv-shows"
+                  className={cn({
+                    'text-primary': mediaData?.tvShows?.length > 0,
+                  })}
+                >
+                  TV Shows
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent
+                value="movies"
+                className="pb-20 h-[80vh] overflow-y-scroll"
+              >
+                {mediaData?.movies?.length === 0 && (
+                  <div className="flex justify-center items-center h-full">
+                    <NoData withIcon message="No movies found" />
+                  </div>
+                )}
+                <ul className="gap-4 grid grid-cols-2 md:grid-cols-4">
+                  {/* Render search results as MediaCard components */}
+                  {mediaData?.movies.map((movie) => (
+                    <li
+                      key={movie.id}
+                      className="bg-white shadow p-3 rounded-lg h-fit"
+                      data-testid="search-result"
+                    >
+                      <MediaCard
+                        media={movie}
+                        // When a movie card is clicked, close the drawer
+                        onClick={() => setDrawerIsOpen(false)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </TabsContent>
+              <TabsContent
+                value="tv-shows"
+                className="pb-20 h-[80vh] overflow-y-scroll"
+              >
+                {mediaData?.tvShows?.length === 0 && (
+                  <div className="flex justify-center items-center h-full">
+                    <NoData withIcon message="No TV shows found" />
+                  </div>
+                )}
+                <ul className="gap-4 grid grid-cols-2 md:grid-cols-4">
+                  {/* Render search results as MediaCard components */}
+                  {mediaData?.tvShows.map((tvShow) => (
+                    <li
+                      key={tvShow.id}
+                      className="bg-white shadow p-3 rounded-lg h-fit"
+                    >
+                      <MediaCard
+                        media={tvShow}
+                        isTvShow
+                        // When a movie card is clicked, close the drawer
+                        onClick={() => setDrawerIsOpen(false)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </TabsContent>
+            </Tabs>
           )}
         </div>
       </DrawerContent>

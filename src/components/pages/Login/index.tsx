@@ -1,4 +1,4 @@
-import { fetchRequestToken } from '@/app/services/tmdb';
+import { fetchRequestToken } from '@/app/services/auth';
 import { useAuthStore } from '@/app/store/useAuthStore';
 import { Button } from '@/components/ui/button';
 import { Link, useSearch } from '@tanstack/react-router';

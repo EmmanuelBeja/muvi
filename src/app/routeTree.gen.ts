@@ -13,7 +13,9 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as FavouritesRouteImport } from './routes/favourites'
 import { Route as _notFoundRouteImport } from './routes/__not-found'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TvShowsIndexRouteImport } from './routes/tv-shows/index'
 import { Route as MoviesIndexRouteImport } from './routes/movies/index'
+import { Route as TvShowsTvShowIdRouteImport } from './routes/tv-shows/$tvShowId'
 import { Route as MoviesMovieIdRouteImport } from './routes/movies/$movieId'
 
 const LoginRoute = LoginRouteImport.update({
@@ -35,9 +37,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TvShowsIndexRoute = TvShowsIndexRouteImport.update({
+  id: '/tv-shows/',
+  path: '/tv-shows/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MoviesIndexRoute = MoviesIndexRouteImport.update({
   id: '/movies/',
   path: '/movies/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TvShowsTvShowIdRoute = TvShowsTvShowIdRouteImport.update({
+  id: '/tv-shows/$tvShowId',
+  path: '/tv-shows/$tvShowId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MoviesMovieIdRoute = MoviesMovieIdRouteImport.update({
@@ -51,14 +63,18 @@ export interface FileRoutesByFullPath {
   '/favourites': typeof FavouritesRoute
   '/login': typeof LoginRoute
   '/movies/$movieId': typeof MoviesMovieIdRoute
+  '/tv-shows/$tvShowId': typeof TvShowsTvShowIdRoute
   '/movies': typeof MoviesIndexRoute
+  '/tv-shows': typeof TvShowsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/favourites': typeof FavouritesRoute
   '/login': typeof LoginRoute
   '/movies/$movieId': typeof MoviesMovieIdRoute
+  '/tv-shows/$tvShowId': typeof TvShowsTvShowIdRoute
   '/movies': typeof MoviesIndexRoute
+  '/tv-shows': typeof TvShowsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -67,13 +83,29 @@ export interface FileRoutesById {
   '/favourites': typeof FavouritesRoute
   '/login': typeof LoginRoute
   '/movies/$movieId': typeof MoviesMovieIdRoute
+  '/tv-shows/$tvShowId': typeof TvShowsTvShowIdRoute
   '/movies/': typeof MoviesIndexRoute
+  '/tv-shows/': typeof TvShowsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/favourites' | '/login' | '/movies/$movieId' | '/movies'
+  fullPaths:
+    | '/'
+    | '/favourites'
+    | '/login'
+    | '/movies/$movieId'
+    | '/tv-shows/$tvShowId'
+    | '/movies'
+    | '/tv-shows'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/favourites' | '/login' | '/movies/$movieId' | '/movies'
+  to:
+    | '/'
+    | '/favourites'
+    | '/login'
+    | '/movies/$movieId'
+    | '/tv-shows/$tvShowId'
+    | '/movies'
+    | '/tv-shows'
   id:
     | '__root__'
     | '/'
@@ -81,7 +113,9 @@ export interface FileRouteTypes {
     | '/favourites'
     | '/login'
     | '/movies/$movieId'
+    | '/tv-shows/$tvShowId'
     | '/movies/'
+    | '/tv-shows/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -90,7 +124,9 @@ export interface RootRouteChildren {
   FavouritesRoute: typeof FavouritesRoute
   LoginRoute: typeof LoginRoute
   MoviesMovieIdRoute: typeof MoviesMovieIdRoute
+  TvShowsTvShowIdRoute: typeof TvShowsTvShowIdRoute
   MoviesIndexRoute: typeof MoviesIndexRoute
+  TvShowsIndexRoute: typeof TvShowsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -123,11 +159,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tv-shows/': {
+      id: '/tv-shows/'
+      path: '/tv-shows'
+      fullPath: '/tv-shows'
+      preLoaderRoute: typeof TvShowsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/movies/': {
       id: '/movies/'
       path: '/movies'
       fullPath: '/movies'
       preLoaderRoute: typeof MoviesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tv-shows/$tvShowId': {
+      id: '/tv-shows/$tvShowId'
+      path: '/tv-shows/$tvShowId'
+      fullPath: '/tv-shows/$tvShowId'
+      preLoaderRoute: typeof TvShowsTvShowIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/movies/$movieId': {
@@ -146,7 +196,9 @@ const rootRouteChildren: RootRouteChildren = {
   FavouritesRoute: FavouritesRoute,
   LoginRoute: LoginRoute,
   MoviesMovieIdRoute: MoviesMovieIdRoute,
+  TvShowsTvShowIdRoute: TvShowsTvShowIdRoute,
   MoviesIndexRoute: MoviesIndexRoute,
+  TvShowsIndexRoute: TvShowsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

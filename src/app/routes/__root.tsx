@@ -7,32 +7,36 @@ import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { useAuthStore } from '../store/useAuthStore';
 
 // Create the root route with layout and shared UI
-export const Route = createRootRoute({
-  component: () => {
-    // Get the current account username from auth store
-    const accountUsername = useAuthStore.getState().accountUsername;
-    return (
-      <div className="w-full">
-        {/* Scroll to top on route change */}
-        <ScrollToTop />
-        {/* Navigation bar */}
-        <Navbar />
-        {/* Main content area */}
-        <div className="mx-auto p-4 max-w-6xl min-h-screen">
-          {/* Show greeting if user is logged in */}
-          {accountUsername ? (
-            <div className="font-semibold text-sm">
-              Hello <span className="text-secondary">{accountUsername}</span>!
-            </div>
-          ) : (
-            ''
-          )}
-          {/* Render child routes */}
-          <Outlet />
-        </div>
-        {/* Footer at the bottom */}
-        <Footer />
+function RootComponent() {
+  // Get the current account username from auth store
+  // const accountUsername = useAuthStore.getState().accountUsername;
+  const accountUsername = useAuthStore((state) => state.accountUsername);
+
+  return (
+    <div className="w-full">
+      {/* Scroll to top on route change */}
+      <ScrollToTop />
+      {/* Navigation bar */}
+      <Navbar />
+      {/* Main content area */}
+      <div className="mx-auto p-4 max-w-6xl min-h-screen">
+        {/* Show greeting if user is logged in */}
+        {accountUsername ? (
+          <div className="font-semibold text-sm">
+            Hello <span className="text-secondary">{accountUsername}</span>!
+          </div>
+        ) : (
+          ''
+        )}
+        {/* Render child routes */}
+        <Outlet />
       </div>
-    );
-  },
+      {/* Footer at the bottom */}
+      <Footer />
+    </div>
+  );
+}
+
+export const Route = createRootRoute({
+  component: RootComponent,
 });

@@ -1,4 +1,4 @@
-import { fetchMovieDetails } from '@/app/services/tmdb';
+import { fetchMovieDetails } from '@/app/services/movies';
 import { useQuery } from '@tanstack/react-query';
 
 /**

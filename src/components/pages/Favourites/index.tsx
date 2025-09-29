@@ -1,7 +1,9 @@
 import { useAuthStore } from '@/app/store/useAuthStore';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Link, Navigate } from '@tanstack/react-router';
 import { ChevronLeft } from 'lucide-react';
-import FavoritesList from './FavoritesList';
+import FavoriteMovies from './FavoriteMovies';
+import FavoriteTvShows from './FavoriteTvShows';
 
 /**
  * Favourites component
@@ -28,8 +30,21 @@ const Favourites = () => {
           Your favourites
         </h1>
       </div>
-      {/* List of favourite movies */}
-      <FavoritesList />
+
+      <Tabs defaultValue="movies" className="">
+        <TabsList>
+          <TabsTrigger value="movies">Movies</TabsTrigger>
+          <TabsTrigger value="tv-shows">TV Shows</TabsTrigger>
+        </TabsList>
+        <TabsContent value="movies">
+          {/* List of favourite movies */}
+          <FavoriteMovies />
+        </TabsContent>
+        <TabsContent value="tv-shows">
+          {/* List of favourite TV shows */}
+          <FavoriteTvShows />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

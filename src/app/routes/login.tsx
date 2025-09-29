@@ -1,6 +1,5 @@
 // src/app/routes/login.tsx
 // Route definition for the /login page
-// import Login from '@/components/pages/Login';
 import { createFileRoute, lazyRouteComponent } from '@tanstack/react-router';
 
 // Create the /login route with validation for search params

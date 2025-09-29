@@ -1,6 +1,5 @@
 // src/app/routes/favourites.tsx
 // Route definition for the /favourites page
-// import Favourites from '@/components/pages/Favourites';
 import { createFileRoute, lazyRouteComponent } from '@tanstack/react-router';
 
 // Create the /favourites route and render the Favourites component
